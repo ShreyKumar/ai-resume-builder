@@ -190,41 +190,6 @@ export function EducationSection() {
               </div>
             </div>
 
-            <div className="grid gap-2">
-              <Label className="text-foreground">Achievements / Activities</Label>
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Dean's List, Honors Society..."
-                  value={newAchievement}
-                  onChange={(e) => setNewAchievement(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addAchievement())}
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-                <Button type="button" onClick={addAchievement} variant="secondary">
-                  Add
-                </Button>
-              </div>
-              {currentEducation.achievements && currentEducation.achievements.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {currentEducation.achievements.map((achievement, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-1 px-3 py-1 bg-secondary rounded-full text-sm text-secondary-foreground"
-                    >
-                      <span className="truncate max-w-[200px]">{achievement}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeAchievement(index)}
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
             <div className="flex gap-2 pt-2">
               <Button onClick={addEducation} className="bg-primary text-primary-foreground">
                 Save Education

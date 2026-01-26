@@ -1,10 +1,13 @@
 export interface ContactDetails {
   fullName: string;
-  email: string;
-  phone: string;
-  location: string;
-  linkedin: string;
-  website: string;
+  socials: {
+    linkedin: string;
+    website: string;
+    email: string;
+    phone: string;
+    location: string;
+  }
+  targetRoles: string;
 }
 
 export interface JobExperience {
@@ -29,9 +32,6 @@ export interface OpenSourceContribution {
 
 export interface Award {
   id: string;
-  title: string;
-  issuer: string;
-  date: string;
   description: string;
 }
 
@@ -70,11 +70,14 @@ export interface ResumeData {
 export const defaultResumeData: ResumeData = {
   contact: {
     fullName: "",
-    email: "",
-    phone: "",
-    location: "",
-    linkedin: "",
-    website: "",
+    socials: {
+      linkedin: "",
+      website: "",
+      email: "",
+      phone: "",
+      location: "",
+    },
+    targetRoles: "",
   },
   summary: "",
   experiences: [],

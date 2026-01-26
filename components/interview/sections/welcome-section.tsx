@@ -18,7 +18,7 @@ export function WelcomeSection() {
             Build Your Professional Resume
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            {"Let's create a standout resume together. I'll guide you through a series of questions to understand your experience and craft a compelling story."}
+            {"Someone's looking for a new job? Let's build a resume! We'll go one step at a time."}
           </p>
         </div>
 

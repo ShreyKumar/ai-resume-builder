@@ -17,12 +17,9 @@ export function AwardsSection() {
   const [currentAward, setCurrentAward] = useState<Partial<Award>>({});
 
   const addAward = () => {
-    if (currentAward.title) {
+    if (currentAward.description) {
       const newAward: Award = {
         id: Date.now().toString(),
-        title: currentAward.title || "",
-        issuer: currentAward.issuer || "",
-        date: currentAward.date || "",
         description: currentAward.description || "",
       };
       setResumeData((prev) => ({
@@ -57,13 +54,7 @@ export function AwardsSection() {
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                   <Trophy className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{award.title}</h3>
-                  <p className="text-sm text-muted-foreground">{award.issuer}</p>
-                  {award.date && (
-                    <p className="text-xs text-muted-foreground mt-1">{award.date}</p>
-                  )}
-                </div>
+                <p className="text-sm text-muted-foreground">{award.description}</p>
               </div>
               <Button
                 variant="ghost"
@@ -82,58 +73,15 @@ export function AwardsSection() {
             <div className="grid gap-2">
               <Label className="flex items-center gap-2 text-foreground">
                 <Trophy className="w-4 h-4 text-muted-foreground" />
-                Award Title *
+                Award Description *
               </Label>
               <Input
-                placeholder="Employee of the Year"
-                value={currentAward.title || ""}
-                onChange={(e) =>
-                  setCurrentAward((prev) => ({ ...prev, title: e.target.value }))
-                }
-                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 text-foreground">
-                  <Building2 className="w-4 h-4 text-muted-foreground" />
-                  Issuing Organization
-                </Label>
-                <Input
-                  placeholder="Acme Inc."
-                  value={currentAward.issuer || ""}
-                  onChange={(e) =>
-                    setCurrentAward((prev) => ({ ...prev, issuer: e.target.value }))
-                  }
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 text-foreground">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  Date Received
-                </Label>
-                <Input
-                  placeholder="December 2023"
-                  value={currentAward.date || ""}
-                  onChange={(e) =>
-                    setCurrentAward((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-              </div>
-            </div>
-
-            <div className="grid gap-2">
-              <Label className="text-foreground">Description</Label>
-              <Textarea
-                placeholder="Describe what you did to earn this award..."
+                placeholder="Summarize the award in one bullet point (Employee of the Year)"
                 value={currentAward.description || ""}
                 onChange={(e) =>
                   setCurrentAward((prev) => ({ ...prev, description: e.target.value }))
                 }
-                className="min-h-[80px] bg-input border-border text-foreground placeholder:text-muted-foreground resize-none"
+                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
               />
             </div>
 

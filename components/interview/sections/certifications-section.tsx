@@ -98,22 +98,21 @@ export function CertificationsSection() {
               />
             </div>
 
-            <div className="grid gap-2">
-              <Label className="flex items-center gap-2 text-foreground">
-                <Building2 className="w-4 h-4 text-muted-foreground" />
-                Issuing Organization
-              </Label>
-              <Input
-                placeholder="Amazon Web Services"
-                value={currentCert.issuer || ""}
-                onChange={(e) =>
-                  setCurrentCert((prev) => ({ ...prev, issuer: e.target.value }))
-                }
-                className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-              />
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label className="flex items-center gap-2 text-foreground">
+                  <Building2 className="w-4 h-4 text-muted-foreground" />
+                  Issuing Organization
+                </Label>
+                <Input
+                  placeholder="Amazon Web Services"
+                  value={currentCert.issuer || ""}
+                  onChange={(e) =>
+                    setCurrentCert((prev) => ({ ...prev, issuer: e.target.value }))
+                  }
+                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                />
+              </div>
               <div className="grid gap-2">
                 <Label className="flex items-center gap-2 text-foreground">
                   <Calendar className="w-4 h-4 text-muted-foreground" />
@@ -124,48 +123,6 @@ export function CertificationsSection() {
                   value={currentCert.date || ""}
                   onChange={(e) =>
                     setCurrentCert((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 text-foreground">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  Expiration Date
-                </Label>
-                <Input
-                  placeholder="January 2027"
-                  value={currentCert.expirationDate || ""}
-                  onChange={(e) =>
-                    setCurrentCert((prev) => ({ ...prev, expirationDate: e.target.value }))
-                  }
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label className="text-foreground">Credential ID</Label>
-                <Input
-                  placeholder="ABC123XYZ"
-                  value={currentCert.credentialId || ""}
-                  onChange={(e) =>
-                    setCurrentCert((prev) => ({ ...prev, credentialId: e.target.value }))
-                  }
-                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label className="flex items-center gap-2 text-foreground">
-                  <Link className="w-4 h-4 text-muted-foreground" />
-                  Credential URL
-                </Label>
-                <Input
-                  placeholder="https://..."
-                  value={currentCert.link || ""}
-                  onChange={(e) =>
-                    setCurrentCert((prev) => ({ ...prev, link: e.target.value }))
                   }
                   className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                 />

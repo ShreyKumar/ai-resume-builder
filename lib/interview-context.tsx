@@ -38,9 +38,7 @@ const sectionOrder: InterviewSection[] = [
   "education",
   "certifications",
   "skills",
-  "review",
-  "generating",
-  "complete",
+  "review"
 ];
 
 export function InterviewProvider({ children }: { children: ReactNode }) {

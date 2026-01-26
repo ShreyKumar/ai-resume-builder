@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { ResumePreview } from "@/components/resume/resume-preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function CompleteSection() {
@@ -97,11 +96,6 @@ export function CompleteSection() {
               </Button>
             </div>
           </div>
-
-          <TabsContent value="pdf" className="mt-0">
-            <ResumePreview data={resumeData} />
-          </TabsContent>
-
           <TabsContent value="markdown" className="mt-0">
             <div className="flex flex-wrap gap-4 mb-4">
               <Button

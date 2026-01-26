@@ -4,6 +4,9 @@ import { type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { MyResume } from "./resume-preview";
+import { useInterview } from "@/lib/interview-context";
 
 interface QuestionWrapperProps {
   title: string;
@@ -16,6 +19,7 @@ interface QuestionWrapperProps {
   showBack?: boolean;
   showNext?: boolean;
   nextDisabled?: boolean;
+  nextDownloadLink?: boolean;
   className?: string;
 }
 
@@ -30,8 +34,11 @@ export function QuestionWrapper({
   showBack = true,
   showNext = true,
   nextDisabled = false,
+  nextDownloadLink = false,
   className,
 }: QuestionWrapperProps) {
+  const { resumeData } = useInterview();
+
   return (
     <div
       className={cn(
@@ -66,7 +73,7 @@ export function QuestionWrapper({
           ) : (
             <div />
           )}
-          {showNext && onNext && (
+          {showNext && onNext && !nextDownloadLink && (
             <Button
               onClick={onNext}
               disabled={nextDisabled}
@@ -75,6 +82,15 @@ export function QuestionWrapper({
               {nextLabel}
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
+          )}
+          {nextDownloadLink && (
+            <PDFDownloadLink className="flex bg-primary text-primary-foreground hover:bg-primary/90 w-48 p-2 flex justify-between items-center rounded"
+            document={<MyResume resumeData={resumeData} />}
+            fileName="resume.pdf"
+          >
+              <span>{nextLabel}</span>
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </PDFDownloadLink>
           )}
         </div>
       </div>
