@@ -1,5 +1,6 @@
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
+import { NextResponse } from "next/server";
 
 const openrouter = createOpenAI({
   baseURL: "https://openrouter.ai/api/v1",
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
     "unknown";
 
   if (isRateLimited(ip)) {
-    return Response.json(
+    return NextResponse.json(
       { error: "Too many requests. Please wait before trying again." },
       { status: 429 }
     );
@@ -50,10 +51,10 @@ export async function POST(request: Request) {
     const fieldType: unknown = body?.fieldType;
 
     if (!text || typeof text !== "string") {
-      return Response.json({ error: "Text is required" }, { status: 400 });
+      return NextResponse.json({ error: "Text is required" }, { status: 400 });
     }
     if (text.length > MAX_TEXT_LENGTH) {
-      return Response.json({ error: "Text is too long" }, { status: 400 });
+      return NextResponse.json({ error: "Text is too long" }, { status: 400 });
     }
 
     const safeFieldType =
@@ -75,10 +76,10 @@ Return ONLY the improved string. Do not include any introductory text, quotes ar
       prompt,
     });
 
-    return Response.json({ suggestion: suggestion.trim() });
+    return NextResponse.json({ suggestion: suggestion.trim() });
   } catch (error) {
     console.error("Error generating field improvement:", error);
-    return Response.json(
+    return NextResponse.json(
       { error: "Failed to generate suggestion" },
       { status: 500 }
     );

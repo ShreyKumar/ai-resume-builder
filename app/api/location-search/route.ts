@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
 const MAX_RESULTS = 5;
 
@@ -6,7 +8,7 @@ export async function GET(request: Request) {
   const query = searchParams.get("q")?.trim();
 
   if (!query || query.length < 2) {
-    return Response.json([]);
+    return NextResponse.json([]);
   }
 
   try {
@@ -24,11 +26,11 @@ export async function GET(request: Request) {
     });
 
     if (!res.ok) {
-      return Response.json([]);
+      return NextResponse.json([]);
     }
 
     const data: unknown = await res.json();
-    if (!Array.isArray(data)) return Response.json([]);
+    if (!Array.isArray(data)) return NextResponse.json([]);
 
     const results = data
       .map((item: unknown) =>
@@ -41,8 +43,8 @@ export async function GET(request: Request) {
       )
       .filter((name): name is string => name !== null);
 
-    return Response.json(results);
+    return NextResponse.json(results);
   } catch {
-    return Response.json([]);
+    return NextResponse.json([]);
   }
 }

@@ -204,7 +204,7 @@ interface ResumePDFDocumentProps {
 }
 
 export function ResumePDFDocument({ data }: ResumePDFDocumentProps) {
-  const hasContact = data.contact.fullName || data.contact.email;
+  const hasContact = data.contact.fullName || data.contact.socials.email;
   const hasExperience = data.experiences.length > 0;
   const hasEducation = data.education.length > 0;
   const hasSkills = data.skills.length > 0;
@@ -220,22 +220,22 @@ export function ResumePDFDocument({ data }: ResumePDFDocumentProps) {
           <View style={styles.header}>
             <Text style={styles.name}>{data.contact.fullName}</Text>
             <View style={styles.contactRow}>
-              {data.contact.email && (
-                <Text style={styles.contactItem}>{data.contact.email}</Text>
+              {data.contact.socials.email && (
+                <Text style={styles.contactItem}>{data.contact.socials.email}</Text>
               )}
-              {data.contact.phone && (
-                <Text style={styles.contactItem}>| {data.contact.phone}</Text>
+              {data.contact.socials.phone && (
+                <Text style={styles.contactItem}>| {data.contact.socials.phone}</Text>
               )}
-              {data.contact.location && (
-                <Text style={styles.contactItem}>| {data.contact.location}</Text>
+              {data.contact.socials.location && (
+                <Text style={styles.contactItem}>| {data.contact.socials.location}</Text>
               )}
-              {data.contact.linkedin && (
-                <Link src={data.contact.linkedin} style={styles.contactLink}>
+              {data.contact.socials.linkedin && (
+                <Link src={data.contact.socials.linkedin} style={styles.contactLink}>
                   | LinkedIn
                 </Link>
               )}
-              {data.contact.website && (
-                <Link src={data.contact.website} style={styles.contactLink}>
+              {data.contact.socials.website && (
+                <Link src={data.contact.socials.website} style={styles.contactLink}>
                   | Portfolio
                 </Link>
               )}
@@ -379,14 +379,7 @@ export function ResumePDFDocument({ data }: ResumePDFDocumentProps) {
             <Text style={styles.sectionTitle}>Awards & Recognition</Text>
             {data.awards.map((award) => (
               <View key={award.id} style={styles.awardItem}>
-                <View style={styles.experienceHeader}>
-                  <Text style={styles.awardTitle}>{award.title}</Text>
-                  <Text style={styles.dates}>{award.date}</Text>
-                </View>
-                <Text style={styles.awardIssuer}>{award.issuer}</Text>
-                {award.description && (
-                  <Text style={styles.description}>{award.description}</Text>
-                )}
+                <Text style={styles.description}>{award.description}</Text>
               </View>
             ))}
           </View>
