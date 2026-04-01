@@ -2,17 +2,22 @@ import { useEffect } from "react";
 import { defaultResumeData, ResumeData } from "./resume-types";
 import { useInterview } from "./interview-context";
 
-export const useCopyToResumeData = (
+/**
+ * Debounces syncing a section's local form state up to the global resume context.
+ * Sections that hold their own local copy of resumeData call this hook so the
+ * live PDF preview updates without re-rendering on every keystroke.
+ */
+export function useDebouncedResumeSync(
   localResumeData: ResumeData = defaultResumeData,
-  intervalMs: number = 750
-) => {
+  delayMs: number = 750
+) {
   const { setResumeData } = useInterview();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setResumeData(localResumeData);
-    }, intervalMs);
+    }, delayMs);
 
     return () => clearTimeout(timer);
-  }, [localResumeData, setResumeData, intervalMs]);
-};
+  }, [localResumeData, setResumeData, delayMs]);
+}

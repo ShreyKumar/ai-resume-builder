@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, Trophy, Building2, Calendar } from "lucide-react";
+import { Plus, Trash2, Trophy } from "lucide-react";
 import type { Award } from "@/lib/resume-types";
+import { AiSuggestion } from "../ai-suggestion";
 
 export function AwardsSection() {
   const { resumeData, setResumeData, setCurrentSection } = useInterview();
@@ -19,7 +20,7 @@ export function AwardsSection() {
   const addAward = () => {
     if (currentAward.description) {
       const newAward: Award = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         description: currentAward.description || "",
       };
       setResumeData((prev) => ({
@@ -82,6 +83,11 @@ export function AwardsSection() {
                   setCurrentAward((prev) => ({ ...prev, description: e.target.value }))
                 }
                 className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+              />
+              <AiSuggestion
+                value={currentAward.description || ""}
+                fieldType="Award Summary"
+                onApply={(suggestion) => setCurrentAward((prev) => ({ ...prev, description: suggestion }))}
               />
             </div>
 

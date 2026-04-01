@@ -18,7 +18,7 @@ export function CertificationsSection() {
   const addCertification = () => {
     if (currentCert.name) {
       const newCert: Certification = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         name: currentCert.name || "",
         issuer: currentCert.issuer || "",
         date: currentCert.date || "",

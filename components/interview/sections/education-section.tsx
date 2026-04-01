@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Plus, Trash2, GraduationCap, Building2, Calendar, X } from "lucide-react";
+import { Plus, Trash2, GraduationCap, Building2, Calendar, X, Star } from "lucide-react";
 import type { Education } from "@/lib/resume-types";
 
 export function EducationSection() {
@@ -21,7 +21,7 @@ export function EducationSection() {
   const addEducation = () => {
     if (currentEducation.institution && currentEducation.degree) {
       const newEdu: Education = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         institution: currentEducation.institution || "",
         degree: currentEducation.degree || "",
         field: currentEducation.field || "",
@@ -188,6 +188,46 @@ export function EducationSection() {
                   className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                 />
               </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label className="flex items-center gap-2 text-foreground">
+                <Star className="w-4 h-4 text-muted-foreground" />
+                Achievements / Honours
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Dean's List, graduated with distinction..."
+                  value={newAchievement}
+                  onChange={(e) => setNewAchievement(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && (e.preventDefault(), addAchievement())
+                  }
+                  className="bg-input border-border text-foreground placeholder:text-muted-foreground"
+                />
+                <Button type="button" onClick={addAchievement} variant="secondary">
+                  Add
+                </Button>
+              </div>
+              {currentEducation.achievements && currentEducation.achievements.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {currentEducation.achievements.map((achievement, index) => (
+                    <div
+                      key={achievement}
+                      className="flex items-center gap-1 px-3 py-1 bg-secondary rounded-full text-sm text-secondary-foreground"
+                    >
+                      <span className="truncate max-w-[200px]">{achievement}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeAchievement(index)}
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2 pt-2">

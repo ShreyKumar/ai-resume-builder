@@ -40,6 +40,8 @@ export function InterviewFlow() {
         return <SkillsSection />;
       case "review":
         return <ReviewSection />;
+      case "complete":
+        return <CompleteSection />;
       default:
         return <WelcomeSection />;
     }

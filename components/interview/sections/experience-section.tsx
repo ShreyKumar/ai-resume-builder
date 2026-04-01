@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Plus, Trash2, Briefcase, Building2, Calendar, X } from "lucide-react";
 import type { JobExperience } from "@/lib/resume-types";
+import { AiSuggestion } from "../ai-suggestion";
 
 export function ExperienceSection() {
   const { resumeData, setResumeData, setCurrentSection } = useInterview();
@@ -23,7 +24,7 @@ export function ExperienceSection() {
   const addExperience = () => {
     if (currentExperience.company && currentExperience.position) {
       const newExp: JobExperience = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         company: currentExperience.company || "",
         position: currentExperience.position || "",
         startDate: currentExperience.startDate || "",
@@ -188,6 +189,11 @@ export function ExperienceSection() {
                   setCurrentExperience((prev) => ({ ...prev, description: e.target.value }))
                 }
                 className="min-h-[100px] bg-input border-border text-foreground placeholder:text-muted-foreground resize-none"
+              />
+              <AiSuggestion
+                value={currentExperience.description || ""}
+                fieldType="Job Experience Description"
+                onApply={(suggestion) => setCurrentExperience((prev) => ({ ...prev, description: suggestion }))}
               />
             </div>
 

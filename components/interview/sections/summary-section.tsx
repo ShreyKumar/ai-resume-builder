@@ -4,18 +4,15 @@ import { useInterview } from "@/lib/interview-context";
 import { QuestionWrapper } from "../question-wrapper";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
-import { useCopyToResumeData } from "@/lib/use-copy-to-resume-data";
+import { useState } from "react";
+import { useDebouncedResumeSync } from "@/lib/use-debounced-resume-sync";
+import { AiSuggestion } from "../ai-suggestion";
 
 export function SummarySection() {
   const { resumeData: initialResumeData, setCurrentSection } = useInterview();
   const [resumeData, setResumeData] = useState(initialResumeData);
 
-  useCopyToResumeData(resumeData);
-
-  // useEffect(() => {
-  //   console.log("Resume data changed: ", resumeData)
-  // }, [resumeData]);
+  useDebouncedResumeSync(resumeData);
 
   return (
     <QuestionWrapper
@@ -34,9 +31,13 @@ export function SummarySection() {
           value={resumeData.summary}
           onChange={(e) =>
             setResumeData((prev) => ({ ...prev, summary: e.target.value }))
-            // setResumeData(e.target.value)
           }
           className="min-h-[200px] bg-input border-border text-foreground placeholder:text-muted-foreground resize-none"
+        />
+        <AiSuggestion 
+          value={resumeData.summary} 
+          fieldType="Professional Summary" 
+          onApply={(suggestion) => setResumeData((prev) => ({ ...prev, summary: suggestion }))} 
         />
         <p className="text-sm text-muted-foreground">
           Tip: Keep it concise, around 3-4 sentences. Focus on your key strengths and what you bring to the table.

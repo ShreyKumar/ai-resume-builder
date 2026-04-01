@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Plus, Trash2, Github, Link, X } from "lucide-react";
 import type { OpenSourceContribution } from "@/lib/resume-types";
+import { AiSuggestion } from "../ai-suggestion";
 
 export function OpenSourceSection() {
   const { resumeData, setResumeData, setCurrentSection } = useInterview();
@@ -22,7 +23,7 @@ export function OpenSourceSection() {
   const addContribution = () => {
     if (currentContribution.projectName) {
       const newContrib: OpenSourceContribution = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         projectName: currentContribution.projectName || "",
         role: currentContribution.role || "",
         description: currentContribution.description || "",

@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react"
-
 import {
   createContext,
   useContext,
   useState,
   type ReactNode,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import {
   type ResumeData,
@@ -16,7 +16,7 @@ import {
 
 interface InterviewContextType {
   resumeData: ResumeData;
-  setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
+  setResumeData: Dispatch<SetStateAction<ResumeData>>;
   currentSection: InterviewSection;
   setCurrentSection: (section: InterviewSection) => void;
   progress: number;
@@ -38,7 +38,9 @@ const sectionOrder: InterviewSection[] = [
   "education",
   "certifications",
   "skills",
-  "review"
+  "review",
+  "generating",
+  "complete",
 ];
 
 export function InterviewProvider({ children }: { children: ReactNode }) {
@@ -47,8 +49,8 @@ export function InterviewProvider({ children }: { children: ReactNode }) {
     useState<InterviewSection>("welcome");
   const [generatedResume, setGeneratedResume] = useState("");
 
-  const progress =
-    (sectionOrder.indexOf(currentSection) / (sectionOrder.length - 1)) * 100;
+  const idx = sectionOrder.indexOf(currentSection);
+  const progress = idx === -1 ? 0 : (idx / (sectionOrder.length - 1)) * 100;
 
   return (
     <InterviewContext.Provider

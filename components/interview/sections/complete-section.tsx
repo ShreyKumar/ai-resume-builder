@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ResumePreview } from "@/components/interview/resume-preview";
 
 export function CompleteSection() {
   const { generatedResume, resumeData, setCurrentSection, setGeneratedResume } =
@@ -28,9 +29,13 @@ export function CompleteSection() {
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(generatedResume);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(generatedResume);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable (non-secure context or permission denied)
+    }
   };
 
   const handleDownloadMarkdown = () => {
@@ -96,6 +101,9 @@ export function CompleteSection() {
               </Button>
             </div>
           </div>
+          <TabsContent value="pdf" className="mt-0">
+            <ResumePreview fullWidth />
+          </TabsContent>
           <TabsContent value="markdown" className="mt-0">
             <div className="flex flex-wrap gap-4 mb-4">
               <Button

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { MyResume } from "./resume-preview";
+import { MyResume } from "./my-resume";
 import { useInterview } from "@/lib/interview-context";
 
 interface QuestionWrapperProps {
@@ -84,10 +84,11 @@ export function QuestionWrapper({
             </Button>
           )}
           {nextDownloadLink && (
-            <PDFDownloadLink className="flex bg-primary text-primary-foreground hover:bg-primary/90 w-48 p-2 flex justify-between items-center rounded"
-            document={<MyResume resumeData={resumeData} />}
-            fileName="resume.pdf"
-          >
+            <PDFDownloadLink
+              className="flex bg-primary text-primary-foreground hover:bg-primary/90 w-48 p-2 justify-between items-center rounded"
+              document={<MyResume resumeData={resumeData} />}
+              fileName={`${resumeData.contact.fullName || "resume"}.pdf`}
+            >
               <span>{nextLabel}</span>
               <ChevronRight className="w-4 h-4 ml-1" />
             </PDFDownloadLink>
