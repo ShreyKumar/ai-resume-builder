@@ -212,7 +212,7 @@ export function ContactSection() {
                 role="combobox"
                 aria-expanded={locationOpen}
                 className={cn(
-                  "w-full justify-between bg-input border-border font-normal hover:bg-input",
+                  "w-full justify-between bg-input border-border font-normal hover:bg-input hover:text-current",
                   !resumeData.contact.socials.location && "text-muted-foreground"
                 )}
               >

@@ -16,6 +16,9 @@ export async function GET(request: Request) {
     url.searchParams.set("q", query);
     url.searchParams.set("format", "json");
     url.searchParams.set("limit", String(MAX_RESULTS));
+    url.searchParams.set("countrycodes", "us,ca,gb");
+    url.searchParams.set("featuretype", "city");
+    url.searchParams.set("addressdetails", "1");
 
     const res = await fetch(url.toString(), {
       headers: {
@@ -32,18 +35,31 @@ export async function GET(request: Request) {
     const data: unknown = await res.json();
     if (!Array.isArray(data)) return NextResponse.json([]);
 
+    interface NominatimResult {
+      display_name?: string;
+      address?: {
+        city?: string;
+        town?: string;
+        village?: string;
+        country?: string;
+      };
+    }
+
     const results = data
-      .map((item: unknown) =>
-        typeof item === "object" &&
-        item !== null &&
-        "display_name" in item &&
-        typeof (item as Record<string, unknown>).display_name === "string"
-          ? (item as { display_name: string }).display_name
-          : null
-      )
+      .map((item: unknown) => {
+        if (typeof item !== "object" || item === null) return null;
+        const result = item as NominatimResult;
+        const city =
+          result.address?.city ||
+          result.address?.town ||
+          result.address?.village;
+        const country = result.address?.country;
+        if (city && country) return `${city}, ${country}`;
+        return null;
+      })
       .filter((name): name is string => name !== null);
 
-    return NextResponse.json(results);
+    return NextResponse.json([...new Set(results)]);
   } catch {
     return NextResponse.json([]);
   }
